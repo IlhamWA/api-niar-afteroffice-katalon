@@ -17,25 +17,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-def response = WS.sendRequest(findTestObject('GET list users', [('pages') : '2']))
+def response = WS.sendRequest(findTestObject('GET user not found', [('users') : 0]))
 
-WS.verifyResponseStatusCode(response, 200)
-
-
-def slurper = new groovy.json.JsonSlurper()
-
-def result = slurper.parseText(response.getResponseBodyContent())
-
-def id = result.data[1].id
-
-assert id != null
-assert id instanceof Integer
-assert id == 8
-
-def email = result.data[1].email
-
-assert email != null
-assert email instanceof String
-assert email == "lindsay.ferguson@reqres.in"
-
+WS.verifyResponseStatusCode(response, 404)
 
